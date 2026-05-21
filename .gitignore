@@ -1,0 +1,10 @@
+
+build
+filesystem
+.vscode
+.libdragon
+
+# N64 ROM file type
+*.z64
+*.pak
+*.eeprom
