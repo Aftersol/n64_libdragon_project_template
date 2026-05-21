@@ -39,7 +39,7 @@ extern void __global_core_cleanup(void);
 /**
  * @brief Tickrate per second
  */
-#define TICKRATE = 15
+#define TICKRATE 15
 
 /**
  * @brief Deltatime for running fixed loop functions
