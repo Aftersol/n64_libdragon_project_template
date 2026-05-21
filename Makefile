@@ -44,7 +44,7 @@ MKFONT_FLAGS ?=
 CFLAGS += -Iinclude
 CXXFLAGS = $(CFLAGS)
 
-SRCS_C = $(wildcard $(SOURCE_DIR)/**/*.c)
+SRCS_C = $(shell find . -name "$(SOURCE_DIR)/*.c")
 SRCS_CXX = $(wildcard $(SOURCE_DIR)/**/*.cpp) \
            $(wildcard $(SOURCE_DIR)/**/*.cc) \
            $(wildcard $(SOURCE_DIR)/**/*.cxx) \
