@@ -6,6 +6,10 @@
 #ifndef __STATE1_H
 #define __STATE1_H
 
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Initialize state1
  */
@@ -25,5 +29,9 @@ void state1_loop(float deltaTime);
  * @brief Cleanup state1
  */
 void state1_cleanup(void);
+
+#if __cplusplus
+}
+#endif
 
 #endif

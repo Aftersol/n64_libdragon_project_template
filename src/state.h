@@ -6,12 +6,12 @@
 #ifndef __STATE_H
 #define __STATE_H
 
+#if __cplusplus
+extern "C" {
+#endif
+
 #include "state0.h"
 #include "state1.h"
-
-void (*state_void_jump_table[2][2])(void);
-
-void (*state_loop_jump_table[2][2])(float);
 
 // Define your state here
 typedef enum State {
@@ -20,5 +20,9 @@ typedef enum State {
 } State;
 
 void state_switch(State new_state);
+
+#if __cplusplus
+}
+#endif
 
 #endif

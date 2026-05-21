@@ -30,4 +30,5 @@ void state0_loop(float deltaTime) {
  * @brief Cleanup state0
  */
 void state0_cleanup(void) {
-    /* Do cleanup stuff here */}
+    /* Do cleanup stuff here */
+}

@@ -6,6 +6,10 @@
 #ifndef __SAVE_H
 #define __SAVE_H
 
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Save data struct
  */
@@ -123,5 +127,9 @@ bool sd_update(const char *filename);
  * @return Whether the deletion of the save on the SD card is successful
  */
 bool sd_delete(const char *filename);
+
+#if __cplusplus
+}
+#endif
 
 #endif

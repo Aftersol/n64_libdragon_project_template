@@ -6,6 +6,10 @@
 #ifndef __CORE_H
 #define __CORE_H
 
+#if __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 
 /* Functions that run when the state is changed */
@@ -46,4 +50,8 @@ extern void __global_core_cleanup(void);
  */
 #define __CORE_DELTATIME 1.0f / (float)TICKRATE
 
-#endif // __CORE_HPP
+#if __cplusplus
+}
+#endif
+
+#endif
