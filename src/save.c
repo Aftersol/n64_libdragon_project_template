@@ -24,7 +24,12 @@ bool __eeprom_present = false;
  * @brief Array of whether the Game Pak is 
  * @brief present in each of the four controller
  */
-bool __gamepak_present[4] = false;
+bool __gamepak_present[4] = {
+    false,
+    false,
+    false,
+    false
+};
 
 /**
  * @brief Whether the SD is present in a controller
@@ -42,7 +47,6 @@ bool save_init_eeprom_save(void) {
     return __eeprom_present;
 }
 
-
 /**
  * @brief Initialize the save on Game Pak
  * @return Whether the save on Game Pak was successfully initalized
@@ -52,6 +56,7 @@ bool save_init_gamepak_save(void) {
     for (port = 0; port < 4; port++) {
         /* TODO: initialize gamepak on controller */
     }
+    return false;
 }
 
 /**
@@ -65,7 +70,7 @@ bool save_init_gamepak_save(void) {
  */
 bool save_init_sd_save(void) {
     if (!__sd_card_present) {
-        __sd_card_present = debug_init_sdfs();
+        __sd_card_present = debug_init_sdfs("sd:/", -1);
         return __sd_card_present;
     }
 

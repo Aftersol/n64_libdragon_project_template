@@ -32,8 +32,8 @@ extern void (*core_cleanup)(void);
 /* Internal Functions */
 
 extern void __global_core_init(void);
-extern void __global_core_fixedloop(float deltatime);
-extern void __global_core_loop(float deltatime);
+extern void __global_core_fixedloop(void);
+extern void __global_core_loop(void);
 extern void __global_core_cleanup(void);
 
 /**
@@ -44,6 +44,6 @@ extern void __global_core_cleanup(void);
 /**
  * @brief Deltatime for running fixed loop functions
  */
-#define __CORE_DELTATIME = 1.0f / (float)TICKRATE
+#define __CORE_DELTATIME 1.0f / (float)TICKRATE
 
 #endif // __CORE_HPP

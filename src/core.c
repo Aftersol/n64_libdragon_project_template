@@ -11,6 +11,7 @@
  * @brief Accmulated time between frames
  */
 static float accumulator = 0.0f;
+float frametime = 0.0f;
 
 /**
  * @brief Variable for deltatime
@@ -49,10 +50,9 @@ extern void __global_core_init(void) {
 
 /**
  *  @brief Loop that depends on frame rate
- *  @param deltatime delta time
  */ 
-extern void __global_core_fixedloop(float deltatime) {
-    float frametime = display_get_delta_time();
+extern void __global_core_fixedloop(void) {
+    frametime = display_get_delta_time();
     
     /* In order to prevent problems if the game slows down significantly,
      * we will clamp the maximum timestep the simulation can take */
@@ -71,11 +71,11 @@ extern void __global_core_fixedloop(float deltatime) {
  * @brief Loop that doesn't depend on frame rate
  * @param deltaTime delta time
  */
-extern void __global_core_loop(float deltatime) {
+extern void __global_core_loop(void) {
     joypad_poll();
     mixer_try_play();
 
-    core_loop(deltatime);
+    core_loop(frametime);
 }
 
 /**
