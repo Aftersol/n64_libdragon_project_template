@@ -8,54 +8,58 @@ all: $(PROJECT_NAME).z64
 .PHONY: all
 
 ASSETS_DIR = assets
-FILESYSTEM_DIR = filesystem 
+FILESYSTEM_DIR = filesystem
 
-assets = $(wildcard $(ASSETS_DIR)/*.png)
-assets_conv = $(patsubst $(ASSETS_DIR)/%.png, $(FILESYSTEM_DIR)/%.sprite, $(assets))
+# ── Sprites ──────────────────────────────────────────────────────────────────
+assets      = $(wildcard $(ASSETS_DIR)/*.png)
+assets_conv = $(patsubst $(ASSETS_DIR)/%.png,$(FILESYSTEM_DIR)/%.sprite,$(assets))
 
-assets_font = $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.ttf) \
-              $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.fnt) \
-              $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.otf)
-assets_font_conv = $(patsubst $(ASSETS_DIR)/%.ttf, $(FILESYSTEM_DIR)/%.font64, $(assets_font)) \
-                   $(patsubst $(ASSETS_DIR)/%.fnt, $(FILESYSTEM_DIR)/%.font64, $(assets_font)) \
-                   $(patsubst $(ASSETS_DIR)/%.otf, $(FILESYSTEM_DIR)/%.font64, $(assets_font))
+# ── Fonts ─────────────────────────────────────────────────────────────────────
+assets_font_ttf  = $(wildcard $(ASSETS_DIR)/*.ttf)
+assets_font_fnt  = $(wildcard $(ASSETS_DIR)/*.fnt)
+assets_font_otf  = $(wildcard $(ASSETS_DIR)/*.otf)
+assets_font_conv = \
+    $(patsubst $(ASSETS_DIR)/%.ttf,$(FILESYSTEM_DIR)/%.font64,$(assets_font_ttf)) \
+    $(patsubst $(ASSETS_DIR)/%.fnt,$(FILESYSTEM_DIR)/%.font64,$(assets_font_fnt)) \
+    $(patsubst $(ASSETS_DIR)/%.otf,$(FILESYSTEM_DIR)/%.font64,$(assets_font_otf))
 
-
+# ── Audio ─────────────────────────────────────────────────────────────────────
 assets_wav = $(wildcard $(ASSETS_DIR)/*.wav)
 assets_mp3 = $(wildcard $(ASSETS_DIR)/*.mp3)
-assets_xm = $(wildcard $(ASSETS_DIR)/*.xm)
-assets_ym = $(wildcard $(ASSETS_DIR)/*.ym)
+assets_xm  = $(wildcard $(ASSETS_DIR)/*.xm)
+assets_ym  = $(wildcard $(ASSETS_DIR)/*.ym)
 
-assets_audio_conv = $(patsubst $(ASSETS_DIR)/%.wav, $(FILESYSTEM_DIR)/%.wav64, $(assets_wav)) \
-					$(patsubst $(ASSETS_DIR)/%.mp3, $(FILESYSTEM_DIR)/%.wav64, $(assets_mp3)) \
-					$(patsubst $(ASSETS_DIR)/%.xm, $(FILESYSTEM_DIR)/%.xm64, $(assets_xm)) \
-                    $(patsubst $(ASSETS_DIR)/%.ym, $(FILESYSTEM_DIR)/%.ym64, $(assets_ym)) \
+assets_audio_conv = \
+    $(patsubst $(ASSETS_DIR)/%.wav,$(FILESYSTEM_DIR)/%.wav64,$(assets_wav)) \
+    $(patsubst $(ASSETS_DIR)/%.mp3,$(FILESYSTEM_DIR)/%.wav64,$(assets_mp3)) \
+    $(patsubst $(ASSETS_DIR)/%.xm, $(FILESYSTEM_DIR)/%.xm64, $(assets_xm))  \
+    $(patsubst $(ASSETS_DIR)/%.ym, $(FILESYSTEM_DIR)/%.ym64, $(assets_ym))
 
 all_assets_conv = $(assets_conv) $(assets_audio_conv) $(assets_font_conv)
 
+# ── Tool flags ────────────────────────────────────────────────────────────────
 WAV64_AUDIOCONV_FLAGS ?=
+XM_AUDIOCONV_FLAGS    ?=
+YM_AUDIOCONV_FLAGS    ?=
+MKSPRITE_FLAGS        ?=
+MKFONT_FLAGS          ?=
 
-XM_AUDIOCONV_FLAGS ?=
-YM_AUDIOCONV_FLAGS ?=
+CFLAGS   += -Iinclude
+CXXFLAGS  = $(CFLAGS)
 
-MKSPRITE_FLAGS ?=
-MKFONT_FLAGS ?=
+# ── Sources ───────────────────────────────────────────────────────────────────
+SRCS_C   = $(shell find $(SOURCE_DIR) -name "*.c")
+SRCS_CXX = $(shell find $(SOURCE_DIR) \( -name "*.cpp" -o -name "*.cc" \
+                                       -o -name "*.cxx" -o -name "*.c++" \))
 
-CFLAGS += -Iinclude
-CXXFLAGS = $(CFLAGS)
+OBJS = \
+    $(patsubst $(SOURCE_DIR)/%.c,  $(BUILD_DIR)/%.o, $(SRCS_C))   \
+    $(patsubst $(SOURCE_DIR)/%.cpp,$(BUILD_DIR)/%.o, $(SRCS_CXX)) \
+    $(patsubst $(SOURCE_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRCS_CXX)) \
+    $(patsubst $(SOURCE_DIR)/%.cxx,$(BUILD_DIR)/%.o, $(SRCS_CXX)) \
+    $(patsubst $(SOURCE_DIR)/%.c++,$(BUILD_DIR)/%.o, $(SRCS_CXX))
 
-SRCS_C = $(shell find . -name "$(SOURCE_DIR)/*.c")
-SRCS_CXX = $(wildcard $(SOURCE_DIR)/**/*.cpp) \
-           $(wildcard $(SOURCE_DIR)/**/*.cc) \
-           $(wildcard $(SOURCE_DIR)/**/*.cxx) \
-           $(wildcard $(SOURCE_DIR)/**/*.c)
-
-OBJS = $(patsubst $(SOURCE_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS_C)) \
-       $(patsubst $(SOURCE_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS_CXX)) \
-       $(patsubst $(SOURCE_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRCS_CXX)) \
-       $(patsubst $(SOURCE_DIR)/%.cxx, $(BUILD_DIR)/%.o, $(SRCS_CXX)) \
-       $(patsubst $(SOURCE_DIR)/%.c++, $(BUILD_DIR)/%.o, $(SRCS_CXX)) 
-
+# ── Asset rules ───────────────────────────────────────────────────────────────
 $(FILESYSTEM_DIR)/%.sprite: $(ASSETS_DIR)/%.png
 	@mkdir -p $(dir $@)
 	@echo "    [SPRITE] $@"
@@ -76,31 +80,27 @@ $(FILESYSTEM_DIR)/%.xm64: $(ASSETS_DIR)/%.xm
 	@echo "    [AUDIOCONV] $@"
 	@$(N64_AUDIOCONV) $(XM_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
-
 $(FILESYSTEM_DIR)/%.ym64: $(ASSETS_DIR)/%.ym
 	@mkdir -p $(dir $@)
 	@echo "    [AUDIOCONV] $@"
 	@$(N64_AUDIOCONV) $(YM_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
-
 
 $(FILESYSTEM_DIR)/%.font64: $(ASSETS_DIR)/%.ttf
 	@mkdir -p $(dir $@)
 	@echo "    [FONT] $@"
 	@$(N64_MKFONT) $(MKFONT_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
-
 $(FILESYSTEM_DIR)/%.font64: $(ASSETS_DIR)/%.fnt
 	@mkdir -p $(dir $@)
 	@echo "    [FONT] $@"
 	@$(N64_MKFONT) $(MKFONT_FLAGS) -o $(FILESYSTEM_DIR) "$<"
-
 
 $(FILESYSTEM_DIR)/%.font64: $(ASSETS_DIR)/%.otf
 	@mkdir -p $(dir $@)
 	@echo "    [FONT] $@"
 	@$(N64_MKFONT) $(MKFONT_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
-
+# ── Compile rules ─────────────────────────────────────────────────────────────
 $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@echo "    [CC] $<"
@@ -125,17 +125,19 @@ $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c++
 	@mkdir -p $(dir $@)
 	@echo "    [CXX] $<"
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-	
 
+# ── Link / ROM ────────────────────────────────────────────────────────────────
 $(PROJECT_NAME).z64: N64_ROM_TITLE="$(PROJECT_NAME)"
 $(PROJECT_NAME).z64: $(BUILD_DIR)/$(PROJECT_NAME).dfs
 
 $(BUILD_DIR)/$(PROJECT_NAME).elf: $(OBJS)
+
 $(BUILD_DIR)/$(PROJECT_NAME).dfs: $(all_assets_conv)
-	@echo "	[DFS] $@"
-	@if [ ! -s "$<"]; then rm -f "$<"; fi
+	@echo "    [DFS] $@"
+	@if [ ! -s "$<" ]; then rm -f "$<"; fi
 	$(N64_MKDFS) "$@" $(FILESYSTEM_DIR) >/dev/null
 
+# ── Clean ─────────────────────────────────────────────────────────────────────
 clean:
 	rm -f $(BUILD_DIR)/* *.z64
 	rm -rf $(BUILD_DIR)
