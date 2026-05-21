@@ -67,6 +67,6 @@ jobs:
       - uses: ./.github/actions/upload-artifact
         if: ${{ always() && steps.build.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'coindemo.z64'
-          DEST_NAME: 'coindemo.z64'
+          SOURCE_FILE: 'myproject.z64'
+          DEST_NAME: 'myproject.z64'
   
