@@ -9,15 +9,9 @@
 #include "state0.h"
 #include "state1.h"
 
-void (*state_void_jump_table[2][2])(void) = {
-    {state0_init, state0_cleanup},
-    {state1_init, state1_cleanup}
-};
+void (*state_void_jump_table[2][2])(void);
 
-void (*state_loop_jump_table[2][2])(float) = {
-    {state0_fixedloop, state0_loop},
-    {state1_fixedloop, state1_loop}
-};
+void (*state_loop_jump_table[2][2])(float);
 
 // Define your state here
 typedef enum State {

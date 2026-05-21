@@ -7,6 +7,12 @@
 
 #include "core.h"
 
+/* Define the function pointers */
+void (*core_init)(void)       = NULL;
+void (*core_fixedloop)(float) = NULL;
+void (*core_loop)(float)      = NULL;
+void (*core_cleanup)(void)    = NULL;
+
 /**
  * @brief Accmulated time between frames
  */
