@@ -1,3 +1,4 @@
+# ── Makefile ──────────────────────────────────────────────────────────────────
 SOURCE_DIR = src
 BUILD_DIR = build
 include $(N64_INST)/include/n64.mk
@@ -10,7 +11,7 @@ all: $(PROJECT_NAME).z64
 ASSETS_DIR = assets
 FILESYSTEM_DIR = filesystem
 
-# ── Sprites ──────────────────────────────────────────────────────────────────
+# ── Sprites ───────────────────────────────────────────────────────────────────
 assets      = $(wildcard $(ASSETS_DIR)/*.png)
 assets_conv = $(patsubst $(ASSETS_DIR)/%.png,$(FILESYSTEM_DIR)/%.sprite,$(assets))
 
