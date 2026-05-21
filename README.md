@@ -5,7 +5,7 @@ Description of a project
 ## Requirements
 
 - Libdragon Preview branch
-- MIPS64 C compiler
+- MIPS64 C/C++ compiler
 - Make
 
 ## How to Build
