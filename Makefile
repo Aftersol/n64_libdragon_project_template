@@ -8,38 +8,28 @@ all: $(PROJECT_NAME).z64
 .PHONY: all
 
 ASSETS_DIR = assets
-FILESYSTEM_DIR = filesystem otf 
+FILESYSTEM_DIR = filesystem 
 
-assets = $(wildcard $(ASSETS_DIR)/*.png)  $(wildcard $(ASSETS_DIR)/*.PNG)
-assets_conv = $(patsubst $(ASSETS_DIR)/%.png, $(FILESYSTEM_DIR)/%.sprite, $(assets)) \
-              $(patsubst $(ASSETS_DIR)/%.PNG, $(FILESYSTEM_DIR)/%.sprite, $(assets))
+assets = $(wildcard $(ASSETS_DIR)/*.png)
+assets_conv = $(patsubst $(ASSETS_DIR)/%.png, $(FILESYSTEM_DIR)/%.sprite, $(assets))
 
-assets_font = $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.TTF) \
-              $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.ttf) \
-              $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.FNT) \
+assets_font = $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.ttf) \
               $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.fnt) \
-              $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.OTF) \
               $(wildcard $(ASSETS_DIR)/*.font64) $(wildcard $(ASSETS_DIR)/*.otf)
-assets_font_conv = $(patsubst $(ASSETS_DIR)/%.TTF, $(FILESYSTEM_DIR)/%.font64, $(assets_font)) \
-                   $(patsubst $(ASSETS_DIR)/%.ttf, $(FILESYSTEM_DIR)/%.font64, $(assets_font)) \
-                   $(patsubst $(ASSETS_DIR)/%.FNT, $(FILESYSTEM_DIR)/%.font64, $(assets_font)) \
+assets_font_conv = $(patsubst $(ASSETS_DIR)/%.ttf, $(FILESYSTEM_DIR)/%.font64, $(assets_font)) \
                    $(patsubst $(ASSETS_DIR)/%.fnt, $(FILESYSTEM_DIR)/%.font64, $(assets_font)) \
-                   $(patsubst $(ASSETS_DIR)/%.OTF, $(FILESYSTEM_DIR)/%.font64, $(assets_font)) \
                    $(patsubst $(ASSETS_DIR)/%.otf, $(FILESYSTEM_DIR)/%.font64, $(assets_font))
 
 
-assets_wav = $(wildcard $(ASSETS_DIR)/*.wav) $(wildcard $(ASSETS_DIR)/*.WAV)
-assets_mp3 = $(wildcard $(ASSETS_DIR)/*.mp3) $(wildcard $(ASSETS_DIR)/*.MP3)
-assets_xm = $(wildcard $(ASSETS_DIR)/*.xm) $(wildcard $(ASSETS_DIR)/*.XM)
-assets_ym = $(wildcard $(ASSETS_DIR)/*.ym) $(wildcard $(ASSETS_DIR)/*.YM)
+assets_wav = $(wildcard $(ASSETS_DIR)/*.wav)
+assets_mp3 = $(wildcard $(ASSETS_DIR)/*.mp3)
+assets_xm = $(wildcard $(ASSETS_DIR)/*.xm)
+assets_ym = $(wildcard $(ASSETS_DIR)/*.ym)
+
 assets_audio_conv = $(patsubst $(ASSETS_DIR)/%.wav, $(FILESYSTEM_DIR)/%.wav64, $(assets_wav)) \
-                    $(patsubst $(ASSETS_DIR)/%.WAV, $(FILESYSTEM_DIR)/%.wav64, $(assets_wav)) \
 					$(patsubst $(ASSETS_DIR)/%.mp3, $(FILESYSTEM_DIR)/%.wav64, $(assets_mp3)) \
-                    $(patsubst $(ASSETS_DIR)/%.MP3, $(FILESYSTEM_DIR)/%.wav64, $(assets_mp3)) \
 					$(patsubst $(ASSETS_DIR)/%.xm, $(FILESYSTEM_DIR)/%.xm64, $(assets_xm)) \
-                    $(patsubst $(ASSETS_DIR)/%.XM, $(FILESYSTEM_DIR)/%.xm64, $(assets_xm)) \
                     $(patsubst $(ASSETS_DIR)/%.ym, $(FILESYSTEM_DIR)/%.ym64, $(assets_ym)) \
-                    $(patsubst $(ASSETS_DIR)/%.YM, $(FILESYSTEM_DIR)/%.ym64, $(assets_ym))
 
 all_assets_conv = $(assets_conv) $(assets_audio_conv) $(assets_font_conv)
 
@@ -70,11 +60,6 @@ $(FILESYSTEM_DIR)/%.sprite: $(ASSETS_DIR)/%.png
 	@mkdir -p $(dir $@)
 	@echo "    [SPRITE] $@"
 	@$(N64_MKSPRITE) $(MKSPRITE_FLAGS) -o $(FILESYSTEM_DIR) "$<"
-	
-$(FILESYSTEM_DIR)/%.sprite: $(ASSETS_DIR)/%.PNG
-	@mkdir -p $(dir $@)
-	@echo "    [SPRITE] $@"
-	@$(N64_MKSPRITE) $(MKSPRITE_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
 $(FILESYSTEM_DIR)/%.wav64: $(ASSETS_DIR)/%.wav
 	@mkdir -p $(dir $@)
@@ -86,65 +71,35 @@ $(FILESYSTEM_DIR)/%.wav64: $(ASSETS_DIR)/%.mp3
 	@echo "    [AUDIOCONV] $@"
 	@$(N64_AUDIOCONV) $(WAV64_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
-$(FILESYSTEM_DIR)/%.wav64: $(ASSETS_DIR)/%.MP3
-	@mkdir -p $(dir $@)
-	@echo "    [AUDIOCONV] $@"
-	@$(N64_AUDIOCONV) $(WAV64_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
-
-$(FILESYSTEM_DIR)/%.wav64: $(ASSETS_DIR)/%.wav
-	@mkdir -p $(dir $@)
-	@echo "    [AUDIOCONV] $@"
-	@$(N64_AUDIOCONV) $(WAV64_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
-
 $(FILESYSTEM_DIR)/%.xm64: $(ASSETS_DIR)/%.xm
 	@mkdir -p $(dir $@)
 	@echo "    [AUDIOCONV] $@"
 	@$(N64_AUDIOCONV) $(XM_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
-$(FILESYSTEM_DIR)/%.xm64: $(ASSETS_DIR)/%.XM
-	@mkdir -p $(dir $@)
-	@echo "    [AUDIOCONV] $@"
-	@$(N64_AUDIOCONV) $(XM_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
 $(FILESYSTEM_DIR)/%.ym64: $(ASSETS_DIR)/%.ym
 	@mkdir -p $(dir $@)
 	@echo "    [AUDIOCONV] $@"
 	@$(N64_AUDIOCONV) $(YM_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
-$(FILESYSTEM_DIR)/%.ym64: $(ASSETS_DIR)/%.YM
-	@mkdir -p $(dir $@)
-	@echo "    [AUDIOCONV] $@"
-	@$(N64_AUDIOCONV) $(YM_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
 $(FILESYSTEM_DIR)/%.font64: $(ASSETS_DIR)/%.ttf
 	@mkdir -p $(dir $@)
 	@echo "    [FONT] $@"
 	@$(N64_MKFONT) $(MKFONT_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
-$(FILESYSTEM_DIR)/%.font64: $(ASSETS_DIR)/%.TTF
-	@mkdir -p $(dir $@)
-	@echo "    [FONT] $@"
-	@$(N64_MKFONT) $(MKFONT_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
 $(FILESYSTEM_DIR)/%.font64: $(ASSETS_DIR)/%.fnt
 	@mkdir -p $(dir $@)
 	@echo "    [FONT] $@"
 	@$(N64_MKFONT) $(MKFONT_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
-$(FILESYSTEM_DIR)/%.font64: $(ASSETS_DIR)/%.FNT
-	@mkdir -p $(dir $@)
-	@echo "    [FONT] $@"
-	@$(N64_MKFONT) $(MKFONT_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
 $(FILESYSTEM_DIR)/%.font64: $(ASSETS_DIR)/%.otf
 	@mkdir -p $(dir $@)
 	@echo "    [FONT] $@"
 	@$(N64_MKFONT) $(MKFONT_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
-$(FILESYSTEM_DIR)/%.font64: $(ASSETS_DIR)/%.OTF
-	@mkdir -p $(dir $@)
-	@echo "    [FONT] $@"
-	@$(N64_MKFONT) $(MKFONT_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
 $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c
 	@mkdir -p $(dir $@)
