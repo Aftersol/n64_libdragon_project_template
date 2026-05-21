@@ -1,5 +1,6 @@
 /**
  * @file state1.h
+ * @author You
  * @brief Definitions for state1 functions
  */
 

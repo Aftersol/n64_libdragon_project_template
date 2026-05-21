@@ -1,5 +1,6 @@
 /**
  * @file state1.c
+ * @author You
  * @brief Implementation for state1 functions
  */
 

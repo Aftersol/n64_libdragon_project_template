@@ -1,5 +1,6 @@
 /**
  * @file state.h
+ * @author You
  * @brief Definitions for state machine functions
  */
 
@@ -19,6 +20,9 @@ typedef enum State {
     STATE1
 } State;
 
+/**
+ * @brief Sets the new state and start cleaning up stuff from previous state
+ */
 void state_switch(State new_state);
 
 #if __cplusplus

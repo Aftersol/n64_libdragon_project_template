@@ -1,5 +1,6 @@
 /**
  * @file main.c
+ * @author You
  * @brief The entry point which initalizes all of the things for the program
  */
 

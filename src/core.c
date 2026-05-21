@@ -7,10 +7,30 @@
 
 #include "core.h"
 
-/* Define the function pointers */
+/* Implementation of the core user defined function pointers */
+
+/**
+ * @brief This function is called by __global_core_init to run user-defined
+ * @brief initialization code upon start of the state.
+ */
 void (*core_init)(void)       = NULL;
+
+/**
+ * @brief This function is called by __global_core_fixedloop to run user-defined
+ * @brief code every tick.
+ */
 void (*core_fixedloop)(float) = NULL;
+
+/**
+ * @brief This function is called by __global_core_loop to run user-defined
+ * @brief code every frame.
+ */
 void (*core_loop)(float)      = NULL;
+
+/**
+ * @brief This function is called by __global_core_cleanup to run user-defined
+ * @brief cleanup code when the state changes.
+ */
 void (*core_cleanup)(void)    = NULL;
 
 /**
