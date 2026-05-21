@@ -183,6 +183,9 @@ $(BUILD_DIR)/$(PROJECT_NAME).dfs: $(all_assets_conv)
 
 clean:
 	rm -f $(BUILD_DIR)/* *.z64
+	rm -rf $(BUILD_DIR)
+	rm -rf $(FILESYSTEM_DIR)/*
+	rm -rf $(FILESYSTEM_DIR)
 .PHONY: clean
 
 -include $(wildcard $(BUILD_DIR)/*.d)
