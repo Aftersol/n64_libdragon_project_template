@@ -1,5 +1,6 @@
 /**
  * @file core.c
+ * @author You
  * @brief Implementation of core functions
  */
 
