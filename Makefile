@@ -20,7 +20,7 @@ assets_ym = $(wildcard $(ASSETS_DIR)/*.ym) $(wildcard $(ASSETS_DIR)/*.YM)
 assets_audio_conv = $(patsubst $(ASSETS_DIR)/%.wav, $(FILESYSTEM_DIR)/%.wav64, $(assets_wav)) \
                     $(patsubst $(ASSETS_DIR)/%.WAV, $(FILESYSTEM_DIR)/%.wav64, $(assets_wav)) \
 					$(patsubst $(ASSETS_DIR)/%.mp3, $(FILESYSTEM_DIR)/%.wav64, $(assets_mp3)) \
-                    $(patsubst $(ASSETS_DIR)/%.MP3, $(FILESYSTEM_DIR)/%.wav64, $(assets_mp3))
+                    $(patsubst $(ASSETS_DIR)/%.MP3, $(FILESYSTEM_DIR)/%.wav64, $(assets_mp3)) \
 					$(patsubst $(ASSETS_DIR)/%.xm, $(FILESYSTEM_DIR)/%.xm64, $(assets_xm)) \
                     $(patsubst $(ASSETS_DIR)/%.XM, $(FILESYSTEM_DIR)/%.xm64, $(assets_xm)) \
                     $(patsubst $(ASSETS_DIR)/%.ym, $(FILESYSTEM_DIR)/%.ym64, $(assets_ym)) \
