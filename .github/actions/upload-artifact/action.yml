@@ -1,3 +1,6 @@
+# This script uploads the resulting artifact built into Github.
+# You can see what it uploaded in Github actions of your repository under your workflow name.
+
 name: Upload Build
 description: Uploads resulting build
 inputs:
