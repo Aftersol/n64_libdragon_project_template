@@ -61,9 +61,9 @@ extern void __global_core_fixedloop(void) {
     
     accumulator += frametime;
     
-    while (accumulator >= __CORE_DELTATIME) {
-        core_fixedloop(__CORE_DELTATIME);
-        accumulator -= __CORE_DELTATIME;
+    while (accumulator >= dt) {
+        core_fixedloop(dt);
+        accumulator -= dt;
     }
 }
 
