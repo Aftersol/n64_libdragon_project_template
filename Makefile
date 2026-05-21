@@ -41,7 +41,7 @@ assets_audio_conv = $(patsubst $(ASSETS_DIR)/%.wav, $(FILESYSTEM_DIR)/%.wav64, $
                     $(patsubst $(ASSETS_DIR)/%.ym, $(FILESYSTEM_DIR)/%.ym64, $(assets_ym)) \
                     $(patsubst $(ASSETS_DIR)/%.YM, $(FILESYSTEM_DIR)/%.ym64, $(assets_ym))
 
-all_assets_conv = $(assets_conv) $(assets_audio_conv)
+all_assets_conv = $(assets_conv) $(assets_audio_conv) $(assets_font_conv)
 
 WAV64_AUDIOCONV_FLAGS ?=
 XM_AUDIOCONV_FLAGS ?=
