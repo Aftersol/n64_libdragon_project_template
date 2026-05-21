@@ -44,8 +44,10 @@ assets_audio_conv = $(patsubst $(ASSETS_DIR)/%.wav, $(FILESYSTEM_DIR)/%.wav64, $
 all_assets_conv = $(assets_conv) $(assets_audio_conv) $(assets_font_conv)
 
 WAV64_AUDIOCONV_FLAGS ?=
+
 XM_AUDIOCONV_FLAGS ?=
 YM_AUDIOCONV_FLAGS ?=
+
 MKSPRITE_FLAGS ?=
 MKFONT_FLAGS ?=
 
@@ -53,7 +55,11 @@ CFLAGS += -Iinclude
 CXXFLAGS = $(CFLAGS)
 
 SRCS_C = $(wildcard $(SOURCE_DIR)/**/*.c)
-SRCS_CXX = $(wildcard $(SOURCE_DIR)/**/*.cpp) $(wildcard $(SOURCE_DIR)/**/*.cc)
+SRCS_CXX = $(wildcard $(SOURCE_DIR)/**/*.cpp) \
+           $(wildcard $(SOURCE_DIR)/**/*.cc) \
+           $(wildcard $(SOURCE_DIR)/**/*.cxx) \
+           $(wildcard $(SOURCE_DIR)/**/*.c)
+
 OBJS = $(patsubst $(SOURCE_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS_C)) \
        $(patsubst $(SOURCE_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS_CXX)) \
        $(patsubst $(SOURCE_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRCS_CXX)) \
