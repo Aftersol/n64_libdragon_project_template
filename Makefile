@@ -60,9 +60,9 @@ $(FILESYSTEM_DIR)/%.wav64: $(ASSETS_DIR)/%.mp3
 	@$(N64_AUDIOCONV) $(WAV64_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
 $(FILESYSTEM_DIR)/%.wav64: $(ASSETS_DIR)/%.MP3
-@mkdir -p $(dir $@)
-@echo "    [AUDIOCONV] $@"
-@$(N64_AUDIOCONV) $(WAV64_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
+	@mkdir -p $(dir $@)
+	@echo "    [AUDIOCONV] $@"
+	@$(N64_AUDIOCONV) $(WAV64_AUDIOCONV_FLAGS) -o $(FILESYSTEM_DIR) "$<"
 
 $(FILESYSTEM_DIR)/%.wav64: $(ASSETS_DIR)/%.wav
 	@mkdir -p $(dir $@)
