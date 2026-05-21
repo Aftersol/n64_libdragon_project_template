@@ -37,8 +37,12 @@ CFLAGS += -Iinclude
 CXXFLAGS = $(CFLAGS)
 
 SRCS_C = $(wildcard $(SOURCE_DIR)/**/*.c)
-SRCS_CPP = $(wildcard $(SOURCE_DIR)/**/*.cpp) $(wildcard $(SOURCE_DIR)/**/*.cc)
-OBJS = $(patsubst $(SOURCE_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS_C)) $(patsubst $(SOURCE_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS_CPP)) $(patsubst $(SOURCE_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRCS_CPP))
+SRCS_CXX = $(wildcard $(SOURCE_DIR)/**/*.cpp) $(wildcard $(SOURCE_DIR)/**/*.cc)
+OBJS = $(patsubst $(SOURCE_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS_C)) \
+       $(patsubst $(SOURCE_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS_CXX)) \
+       $(patsubst $(SOURCE_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRCS_CXX)) \
+       $(patsubst $(SOURCE_DIR)/%.cxx, $(BUILD_DIR)/%.o, $(SRCS_CXX)) \
+       $(patsubst $(SOURCE_DIR)/%.c++, $(BUILD_DIR)/%.o, $(SRCS_CXX)) 
 
 $(FILESYSTEM_DIR)/%.sprite: $(ASSETS_DIR)/%.png
 	@mkdir -p $(dir $@)
@@ -96,6 +100,16 @@ $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp
+	@mkdir -p $(dir $@)
+	@echo "    [CXX] $<"
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cxx
+	@mkdir -p $(dir $@)
+	@echo "    [CXX] $<"
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c++
 	@mkdir -p $(dir $@)
 	@echo "    [CXX] $<"
 	$(CXX) $(CXXFLAGS) -c $< -o $@
