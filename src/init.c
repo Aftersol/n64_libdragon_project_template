@@ -1,7 +1,8 @@
 /**
- * @file core.c
+ * @file init.c
  * @author You
- * @brief Implementation of initialization state functions for starting up the game
+ * @brief Implementation of initialization state functions for
+ * @brief starting up the game
  */
 
 #include "init.h"

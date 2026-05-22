@@ -1,3 +1,9 @@
+/**
+ * @file init.c
+ * @author You
+ * @brief Declaration of initialization state functions for starting up the game
+ */
+
 #ifndef __INIT_H
 #define __INIT_H
 
