@@ -1,5 +1,5 @@
 /**
- * @file init.c
+ * @file init.h
  * @author You
  * @brief Declaration of initialization state functions for starting up the game
  */
