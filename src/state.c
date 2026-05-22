@@ -11,7 +11,7 @@
 /**
  * @brief Enum for state machine functions
  */
-typedef enum state_func_t{
+typedef enum state_func_t {
     /**
      * @brief Index to initialization function
      */
@@ -31,7 +31,7 @@ typedef enum state_func_t{
      * @brief Index to loop function
      */
     STATE_LOOP = 1
-};
+} state_func_t;
 
 /**
  * @brief Jump table for running functions upon state change
