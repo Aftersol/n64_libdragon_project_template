@@ -11,11 +11,14 @@
 extern "C" {
 #endif
 
+#include "init.h"
+
 #include "state0.h"
 #include "state1.h"
 
 // Define your state here
 typedef enum State {
+    INIT,
     STATE0,
     STATE1
 } State;

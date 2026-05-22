@@ -34,8 +34,8 @@ int main(void) {
     audio_init(48000, 3);
     mixer_init(32);
 
-    /* Set default state */
-    state_switch(STATE0);
+    /* Set default state to initialization state */
+    state_switch(INIT);
 
     /* Main loop */
     while (1) {
