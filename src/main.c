@@ -14,7 +14,7 @@
 
 /**
  * @brief The entrypoint of the program
- * @return Nothing because the program could never exit
+ * @return Nothing because the program will never exit
  */
 int main(void) {
     /* Init logging */
