@@ -4,7 +4,7 @@ Description of a project
 
 ## Requirements
 
-- Libdragon Preview branch
+- [Libdragon Preview branch](https://github.com/DragonMinded/libdragon/tree/preview)
 - MIPS64 C/C++ compiler
 - Make
 
