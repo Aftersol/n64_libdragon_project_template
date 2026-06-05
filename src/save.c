@@ -96,6 +96,7 @@ bool save_eeprom_create(void) {
     }
 
     /* TODO: Implement create logic*/
+
     return true;
 }
 
@@ -153,7 +154,8 @@ bool save_gamepak_create(unsigned char port) {
         return false;
     }
 
-    /* TODO: Implement create logic*/
+    /* TODO: Implement create logic */
+    
     return true;
 }
 
@@ -268,7 +270,7 @@ bool save_sd_update(const char *filename) {
 
     if (fp) {
         /* TODO: Implement SD card update logic */
-        
+
         fclose(fp);
         return true;
     }
