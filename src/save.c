@@ -216,11 +216,13 @@ bool save_gamepak_delete(unsigned char port) {
  * @brief Create a save entry on SD card
  * @return Whether the creation of the save on the SD card is successful
  */
-bool sd_create(const char *filename) {
+bool save_sd_create(const char *filename) {
+    FILE *fp;
+
     if (!__sd_card_present) return false;
     if (!filename) return false;
     
-    FILE *fp = fopen(filename, "wb");
+    fp = fopen(filename, "wb");
     if (fp) {
         /* TODO: Implement SD card creation logic */
 
@@ -235,11 +237,13 @@ bool sd_create(const char *filename) {
  * @brief Read a save entry on SD card
  * @return Whether the read of the save from the SD card is successful
  */
-bool sd_read(const char *filename) {
+bool save_sd_read(const char *filename) {
+    FILE *fp;
+
     if (!__sd_card_present) return false;
     if (!filename) return false;
 
-    FILE *fp = fopen(filename, "rb");
+    fp = fopen(filename, "rb");
     if (fp) {
         /* TODO: Implement SD card read logic */
 
@@ -254,13 +258,17 @@ bool sd_read(const char *filename) {
  * @brief Update a save entry on SD card
  * @return Whether the update of the save on the SD card is successful
  */
-bool sd_update(const char *filename) {
+bool save_sd_update(const char *filename) {
+    FILE *fp;
+
     if (!__sd_card_present) return false;
     if (!filename) return false;
 
-    FILE *fp = fopen(filename, "wb");
+    fp = fopen(filename, "wb");
+
     if (fp) {
         /* TODO: Implement SD card update logic */
+        
         fclose(fp);
         return true;
     }
@@ -272,16 +280,20 @@ bool sd_update(const char *filename) {
  * @brief Delete a save entry on SD card
  * @return Whether the deletion of the save on the SD card is successful
  */
-bool sd_delete(const char *filename) {
-    if (!__sd_card_present) return true;
-    if (!filename) return false;
+bool save_sd_delete(const char *filename) {
+    FILE *fp;
 
-    FILE *fp = fopen(filename, "wb");
-    if (fp) {
-        /* TODO: Implement SD card deletion logic */
-        fclose(fp);
+    if (!__sd_card_present) return true;
+    if (!filename) return true;
+
+    fp = fopen(filename, "wb");
+    if (!fp) {
         return true;
     }
 
-    return false;
+    fclose(fp);
+
+    remove(filename);
+
+    return true;
 }
