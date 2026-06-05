@@ -1,4 +1,4 @@
-# Your Project Name
+# Your N64 Project Name
 
 Description of a project
 
@@ -10,7 +10,7 @@ Description of a project
 
 ## How to Build
 This tutorial assumes you have your N64 Toolchain set up including GCC for MIPS64.
-Make sure you are on the preview branch of libdragon.
+[Make sure you are on the preview branch of libdragon.](https://github.com/DragonMinded/libdragon/tree/preview)
 
 Clone this repository with `--recurse-submodules` or if you haven't run:
 
