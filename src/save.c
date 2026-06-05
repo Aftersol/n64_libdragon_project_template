@@ -155,7 +155,7 @@ bool save_gamepak_create(unsigned char port) {
     }
 
     /* TODO: Implement create logic */
-    
+
     return true;
 }
 
@@ -288,7 +288,7 @@ bool save_sd_delete(const char *filename) {
     if (!__sd_card_present) return true;
     if (!filename) return true;
 
-    fp = fopen(filename, "wb");
+    fp = fopen(filename, "rb");
     if (!fp) {
         return true;
     }
